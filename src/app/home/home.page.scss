@@ -9,3 +9,10 @@
 .camera-preview {
   height: 100%;
 }
+
+.photo-preview {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

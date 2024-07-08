@@ -1,8 +1,15 @@
+@if (pictureSource){
+<app-photo-preview
+  class="photo-preview"
+  [src]="pictureSource"
+></app-photo-preview>
+} @else {
 <app-camera-component class="camera-preview"></app-camera-component>
+}
 <div class="start-button">
   @if(cameraState$|async ){
   <ion-button (click)="photo()">Photo</ion-button>
   } @else{
-  <ion-button (click)="openCamera()">Start</ion-button>
+  <ion-button (click)="newPhoto()">Start</ion-button>
   }
 </div>
