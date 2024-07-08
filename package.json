@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:android": "ionic cap run android --external -livereload --verbose",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

@@ -1,15 +1,10 @@
-@if (pictureSource){
+@if ((pictureSource |async) && (isPreviewOpened$ | async) !== true){
 <app-photo-preview
   class="photo-preview"
-  [src]="pictureSource"
+  [src]="(pictureSource | async) ?? ''"
 ></app-photo-preview>
-} @else {
+} @if(isPreviewOpened$ | async){
 <app-camera-component class="camera-preview"></app-camera-component>
+} @else {
+<ion-button (click)="openCamera()">Take a photo</ion-button>
 }
-<div class="start-button">
-  @if(cameraState$|async ){
-  <ion-button (click)="photo()">Photo</ion-button>
-  } @else{
-  <ion-button (click)="newPhoto()">Start</ion-button>
-  }
-</div>

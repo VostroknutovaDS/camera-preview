@@ -19,19 +19,15 @@ import { PhotoPreviewComponent } from '../components/photo-preview/photo-preview
   ],
 })
 export class HomePage {
-  cameraState$: Observable<boolean>;
-  pictureSource: string = '';
+  pictureSource: Observable<string>;
+  isPreviewOpened$: Observable<boolean>;
 
   constructor(private _cameraPreviewService: CameraPreviewService) {
-    this.cameraState$ = _cameraPreviewService.getCameraState();
+    this.isPreviewOpened$ = this._cameraPreviewService.getPreviewCameraState();
+    this.pictureSource = this._cameraPreviewService.getPicture();
   }
 
-  newPhoto(): void {
-    this.pictureSource = '';
+  openCamera(): void {
     this._cameraPreviewService.start();
-  }
-
-  async photo(): Promise<void> {
-    this.pictureSource = await this._cameraPreviewService.takePhoto();
   }
 }

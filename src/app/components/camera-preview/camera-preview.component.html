@@ -1,4 +1,16 @@
 <div id="cameraPreview" class="camera-preview"></div>
-<div class="ui-container">
-  <div class="mask"></div>
+<div class="overlay">
+  <div class="overlay-header">
+    <ion-button shape="round" (click)="stop()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="mask">
+    <span class="mask-description">Sample text</span>
+  </div>
+  <div class="overlay-footer">
+    <div class="start-button">
+      <ion-button (click)="photo()">Photo</ion-button>
+    </div>
+  </div>
 </div>

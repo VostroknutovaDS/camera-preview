@@ -6,32 +6,44 @@ import { CameraPreviewPictureOptions } from '@capacitor-community/camera-preview
 @Injectable({ providedIn: 'root' })
 export class CameraPreviewService {
   private cameraState$ = new BehaviorSubject<boolean>(false);
+  private cameraPreviewState$ = new BehaviorSubject<boolean>(false);
+  private picture$ = new BehaviorSubject<string>('');
   private readonly cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
     quality: 50,
   };
-  private _picture: string = '';
 
   getCameraState(): Observable<boolean> {
     return this.cameraState$.asObservable();
   }
 
+  getPreviewCameraState(): Observable<boolean> {
+    return this.cameraPreviewState$.asObservable();
+  }
+
+  getPicture(): Observable<string> {
+    return this.picture$.asObservable();
+  }
+
   start(): void {
+    this.cameraPreviewState$.next(true);
     CameraPreview.start({ parent: 'cameraPreview', toBack: true });
     this.cameraState$.next(true);
   }
 
   stop(): void {
+    this.cameraPreviewState$.next(false);
     CameraPreview.stop();
     this.cameraState$.next(false);
   }
 
   async takePhoto(): Promise<string> {
-    const picture = await CameraPreview.capture(
-      this.cameraPreviewPictureOptions
-    );
+    let picture = (
+      await CameraPreview.capture(this.cameraPreviewPictureOptions)
+    ).value;
 
-    this._picture = `data:image/jpeg;base64,${picture.value}`;
+    picture = `data:image/jpeg;base64,${picture}`;
+    this.picture$.next(picture);
     this.stop();
-    return this._picture;
+    return picture;
   }
 }
